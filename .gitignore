@@ -5,9 +5,9 @@ obj/
 /.vscode
 /.idea
 /_ReSharper.Caches/
-/tmp/
-/*.DotSettings
-/node_modules/
+tmp/
+*.DotSettings.user
+node_modules/
 
 *.log
 log*.txt
