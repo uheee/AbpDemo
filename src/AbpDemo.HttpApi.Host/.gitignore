@@ -1,0 +1,13 @@
+bin/
+obj/
+/packages/
+/.vs
+/.vscode
+/.idea
+/_ReSharper.Caches/
+/tmp/
+/*.DotSettings
+/node_modules/
+
+*.log
+log*.txt
