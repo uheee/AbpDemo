@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AbpDemo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AbpDemo.Data;
 using Serilog;
 using Volo.Abp;
 
@@ -11,8 +11,8 @@ namespace AbpDemo.DbMigrator;
 
 public class DbMigratorHostedService : IHostedService
 {
-    private readonly IHostApplicationLifetime _hostApplicationLifetime;
     private readonly IConfiguration _configuration;
+    private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
     public DbMigratorHostedService(IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration)
     {
@@ -23,11 +23,11 @@ public class DbMigratorHostedService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         using (var application = await AbpApplicationFactory.CreateAsync<AbpDemoDbMigratorModule>(options =>
-        {
-           options.Services.ReplaceConfiguration(_configuration);
-           options.UseAutofac();
-           options.Services.AddLogging(c => c.AddSerilog());
-        }))
+               {
+                   options.Services.ReplaceConfiguration(_configuration);
+                   options.UseAutofac();
+                   options.Services.AddLogging(c => c.AddSerilog());
+               }))
         {
             await application.InitializeAsync();
 

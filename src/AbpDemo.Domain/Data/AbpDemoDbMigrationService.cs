@@ -17,12 +17,11 @@ namespace AbpDemo.Data;
 
 public class AbpDemoDbMigrationService : ITransientDependency
 {
-    public ILogger<AbpDemoDbMigrationService> Logger { get; set; }
+    private readonly ICurrentTenant _currentTenant;
 
     private readonly IDataSeeder _dataSeeder;
     private readonly IEnumerable<IAbpDemoDbSchemaMigrator> _dbSchemaMigrators;
     private readonly ITenantRepository _tenantRepository;
-    private readonly ICurrentTenant _currentTenant;
 
     public AbpDemoDbMigrationService(
         IDataSeeder dataSeeder,
@@ -38,6 +37,8 @@ public class AbpDemoDbMigrationService : ITransientDependency
         Logger = NullLogger<AbpDemoDbMigrationService>.Instance;
     }
 
+    public ILogger<AbpDemoDbMigrationService> Logger { get; set; }
+
     public async Task MigrateAsync()
     {
         var initialMigrationAdded = AddInitialMigrationIfNotExist();
@@ -52,7 +53,7 @@ public class AbpDemoDbMigrationService : ITransientDependency
         await MigrateDatabaseSchemaAsync();
         await SeedDataAsync();
 
-        Logger.LogInformation($"Successfully completed host database migrations.");
+        Logger.LogInformation("Successfully completed host database migrations.");
 
         var tenants = await _tenantRepository.GetListAsync(includeDetails: true);
 
@@ -101,8 +102,10 @@ public class AbpDemoDbMigrationService : ITransientDependency
         Logger.LogInformation($"Executing {(tenant == null ? "host" : tenant.Name + " tenant")} database seed...");
 
         await _dataSeeder.SeedAsync(new DataSeedContext(tenant?.Id)
-            .WithProperty(IdentityDataSeedContributor.AdminEmailPropertyName, IdentityDataSeedContributor.AdminEmailDefaultValue)
-            .WithProperty(IdentityDataSeedContributor.AdminPasswordPropertyName, IdentityDataSeedContributor.AdminPasswordDefaultValue)
+            .WithProperty(IdentityDataSeedContributor.AdminEmailPropertyName,
+                IdentityDataSeedContributor.AdminEmailDefaultValue)
+            .WithProperty(IdentityDataSeedContributor.AdminPasswordPropertyName,
+                IdentityDataSeedContributor.AdminPasswordDefaultValue)
         );
     }
 
@@ -127,10 +130,8 @@ public class AbpDemoDbMigrationService : ITransientDependency
                 AddInitialMigration();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
         catch (Exception e)
         {

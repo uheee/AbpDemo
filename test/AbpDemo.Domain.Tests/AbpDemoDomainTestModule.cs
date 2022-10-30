@@ -5,8 +5,7 @@ namespace AbpDemo;
 
 [DependsOn(
     typeof(AbpDemoEntityFrameworkCoreTestModule)
-    )]
+)]
 public class AbpDemoDomainTestModule : AbpModule
 {
-
 }

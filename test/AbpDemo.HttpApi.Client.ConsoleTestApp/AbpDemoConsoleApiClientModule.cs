@@ -12,7 +12,7 @@ namespace AbpDemo.HttpApi.Client.ConsoleTestApp;
     typeof(AbpAutofacModule),
     typeof(AbpDemoHttpApiClientModule),
     typeof(AbpHttpClientIdentityModelModule)
-    )]
+)]
 public class AbpDemoConsoleApiClientModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)

@@ -29,7 +29,7 @@ public class AbpDemoDbContextFactory : IDesignTimeDbContextFactory<AbpDemoDbCont
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../AbpDemo.DbMigrator/"))
-            .AddJsonFile("appsettings.json", optional: false);
+            .AddJsonFile("appsettings.json", false);
 
         return builder.Build();
     }

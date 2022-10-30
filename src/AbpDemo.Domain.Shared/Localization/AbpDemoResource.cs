@@ -5,5 +5,4 @@ namespace AbpDemo.Localization;
 [LocalizationResourceName("AbpDemo")]
 public class AbpDemoResource
 {
-
 }

@@ -9,7 +9,7 @@ namespace AbpDemo.DbMigrator;
     typeof(AbpAutofacModule),
     typeof(AbpDemoEntityFrameworkCoreModule),
     typeof(AbpDemoApplicationContractsModule)
-    )]
+)]
 public class AbpDemoDbMigratorModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)

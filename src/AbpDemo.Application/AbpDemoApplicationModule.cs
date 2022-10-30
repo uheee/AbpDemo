@@ -18,14 +18,11 @@ namespace AbpDemo;
     typeof(AbpTenantManagementApplicationModule),
     typeof(AbpFeatureManagementApplicationModule),
     typeof(AbpSettingManagementApplicationModule)
-    )]
+)]
 public class AbpDemoApplicationModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        Configure<AbpAutoMapperOptions>(options =>
-        {
-            options.AddMaps<AbpDemoApplicationModule>();
-        });
+        Configure<AbpAutoMapperOptions>(options => { options.AddMaps<AbpDemoApplicationModule>(); });
     }
 }

@@ -1,5 +1,5 @@
-﻿using Localization.Resources.AbpUi;
-using AbpDemo.Localization;
+﻿using AbpDemo.Localization;
+using Localization.Resources.AbpUi;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -19,7 +19,7 @@ namespace AbpDemo;
     typeof(AbpTenantManagementHttpApiModule),
     typeof(AbpFeatureManagementHttpApiModule),
     typeof(AbpSettingManagementHttpApiModule)
-    )]
+)]
 public class AbpDemoHttpApiModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)

@@ -73,7 +73,7 @@ var abp = abp || {};
 
     abp.localization = abp.localization || {};
 
-    abp.localization.values =  abp.localization.values || {};
+    abp.localization.values = abp.localization.values || {};
 
     abp.localization.localize = function (key, sourceName) {
         if (sourceName === '_') { //A convention to suppress the localization
@@ -153,7 +153,7 @@ var abp = abp || {};
 
         for (var i = 0; i < packageMap.length; i++) {
             var map = packageMap[i];
-            if (map.name === language){
+            if (map.name === language) {
                 return map.value;
             }
         }
@@ -687,7 +687,7 @@ var abp = abp || {};
     }
 
     /**
-     * Escape HTML to help prevent XSS attacks. 
+     * Escape HTML to help prevent XSS attacks.
      */
     abp.utils.htmlEscape = function (html) {
         return typeof html === 'string' ? html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : html;
@@ -759,14 +759,14 @@ var abp = abp || {};
             return toUtc(date);
         }
     };
-    
+
     /* FEATURES *************************************************/
 
     abp.features = abp.features || {};
 
     abp.features.values = abp.features.values || {};
 
-    abp.features.isEnabled = function(name){
+    abp.features.isEnabled = function (name) {
         var value = abp.features.get(name);
         return value == 'true' || value == 'True';
     }
@@ -774,14 +774,14 @@ var abp = abp || {};
     abp.features.get = function (name) {
         return abp.features.values[name];
     };
-    
+
     /* GLOBAL FEATURES *************************************************/
 
     abp.globalFeatures = abp.globalFeatures || {};
 
     abp.globalFeatures.enabledFeatures = abp.globalFeatures.enabledFeatures || [];
 
-    abp.globalFeatures.isEnabled = function(name){
+    abp.globalFeatures.isEnabled = function (name) {
         return abp.globalFeatures.enabledFeatures.indexOf(name) != -1;
     }
 

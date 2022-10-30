@@ -21,10 +21,10 @@ namespace AbpDemo.OpenIddict;
  */
 public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDependency
 {
-    private readonly IConfiguration _configuration;
     private readonly IAbpApplicationManager _applicationManager;
-    private readonly IOpenIddictScopeManager _scopeManager;
+    private readonly IConfiguration _configuration;
     private readonly IPermissionDataSeeder _permissionDataSeeder;
+    private readonly IOpenIddictScopeManager _scopeManager;
     private readonly IStringLocalizer<OpenIddictResponse> L;
 
     public OpenIddictDataSeedContributor(
@@ -87,17 +87,17 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             /* AbpDemo_Web client is only needed if you created a tiered
              * solution. Otherwise, you can delete this client. */
             await CreateApplicationAsync(
-                name: webClientId,
-                type: OpenIddictConstants.ClientTypes.Confidential,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Web Application",
-                secret: configurationSection["AbpDemo_Web:ClientSecret"] ?? "1q2w3e*",
-                grantTypes: new List<string> //Hybrid flow
+                webClientId,
+                OpenIddictConstants.ClientTypes.Confidential,
+                OpenIddictConstants.ConsentTypes.Implicit,
+                "Web Application",
+                configurationSection["AbpDemo_Web:ClientSecret"] ?? "1q2w3e*",
+                new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
                     OpenIddictConstants.GrantTypes.Implicit
                 },
-                scopes: commonScopes,
+                commonScopes,
                 redirectUri: $"{webClientRootUrl}signin-oidc",
                 clientUri: webClientRootUrl,
                 postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc"
@@ -110,19 +110,19 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         {
             var consoleAndAngularClientRootUrl = configurationSection["AbpDemo_App:RootUrl"]?.TrimEnd('/');
             await CreateApplicationAsync(
-                name: consoleAndAngularClientId,
-                type: OpenIddictConstants.ClientTypes.Public,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Console Test / Angular Application",
-                secret: null,
-                grantTypes: new List<string>
+                consoleAndAngularClientId,
+                OpenIddictConstants.ClientTypes.Public,
+                OpenIddictConstants.ConsentTypes.Implicit,
+                "Console Test / Angular Application",
+                null,
+                new List<string>
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
                     OpenIddictConstants.GrantTypes.Password,
                     OpenIddictConstants.GrantTypes.ClientCredentials,
                     OpenIddictConstants.GrantTypes.RefreshToken
                 },
-                scopes: commonScopes,
+                commonScopes,
                 redirectUri: consoleAndAngularClientRootUrl,
                 clientUri: consoleAndAngularClientRootUrl,
                 postLogoutRedirectUri: consoleAndAngularClientRootUrl
@@ -136,16 +136,16 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             var blazorRootUrl = configurationSection["AbpDemo_Blazor:RootUrl"].TrimEnd('/');
 
             await CreateApplicationAsync(
-                name: blazorClientId,
-                type: OpenIddictConstants.ClientTypes.Public,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Blazor Application",
-                secret: null,
-                grantTypes: new List<string>
+                blazorClientId,
+                OpenIddictConstants.ClientTypes.Public,
+                OpenIddictConstants.ConsentTypes.Implicit,
+                "Blazor Application",
+                null,
+                new List<string>
                 {
-                    OpenIddictConstants.GrantTypes.AuthorizationCode,
+                    OpenIddictConstants.GrantTypes.AuthorizationCode
                 },
-                scopes: commonScopes,
+                commonScopes,
                 redirectUri: $"{blazorRootUrl}/authentication/login-callback",
                 clientUri: blazorRootUrl,
                 postLogoutRedirectUri: $"{blazorRootUrl}/authentication/logout-callback"
@@ -156,20 +156,21 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         var blazorServerTieredClientId = configurationSection["AbpDemo_BlazorServerTiered:ClientId"];
         if (!blazorServerTieredClientId.IsNullOrWhiteSpace())
         {
-            var blazorServerTieredRootUrl = configurationSection["AbpDemo_BlazorServerTiered:RootUrl"].EnsureEndsWith('/');
+            var blazorServerTieredRootUrl =
+                configurationSection["AbpDemo_BlazorServerTiered:RootUrl"].EnsureEndsWith('/');
 
             await CreateApplicationAsync(
-                name: blazorServerTieredClientId,
-                type: OpenIddictConstants.ClientTypes.Confidential,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Blazor Server Application",
-                secret: configurationSection["AbpDemo_BlazorServerTiered:ClientSecret"] ?? "1q2w3e*",
-                grantTypes: new List<string> //Hybrid flow
+                blazorServerTieredClientId,
+                OpenIddictConstants.ClientTypes.Confidential,
+                OpenIddictConstants.ConsentTypes.Implicit,
+                "Blazor Server Application",
+                configurationSection["AbpDemo_BlazorServerTiered:ClientSecret"] ?? "1q2w3e*",
+                new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
                     OpenIddictConstants.GrantTypes.Implicit
                 },
-                scopes: commonScopes,
+                commonScopes,
                 redirectUri: $"{blazorServerTieredRootUrl}signin-oidc",
                 clientUri: blazorServerTieredRootUrl,
                 postLogoutRedirectUri: $"{blazorServerTieredRootUrl}signout-callback-oidc"
@@ -183,16 +184,16 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             var swaggerRootUrl = configurationSection["AbpDemo_Swagger:RootUrl"].TrimEnd('/');
 
             await CreateApplicationAsync(
-                name: swaggerClientId,
-                type: OpenIddictConstants.ClientTypes.Public,
-                consentType: OpenIddictConstants.ConsentTypes.Implicit,
-                displayName: "Swagger Application",
-                secret: null,
-                grantTypes: new List<string>
+                swaggerClientId,
+                OpenIddictConstants.ClientTypes.Public,
+                OpenIddictConstants.ConsentTypes.Implicit,
+                "Swagger Application",
+                null,
+                new List<string>
                 {
-                    OpenIddictConstants.GrantTypes.AuthorizationCode,
+                    OpenIddictConstants.GrantTypes.AuthorizationCode
                 },
-                scopes: commonScopes,
+                commonScopes,
                 redirectUri: $"{swaggerRootUrl}/swagger/oauth2-redirect.html",
                 clientUri: swaggerRootUrl
             );
@@ -212,12 +213,14 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         string postLogoutRedirectUri = null,
         List<string> permissions = null)
     {
-        if (!string.IsNullOrEmpty(secret) && string.Equals(type, OpenIddictConstants.ClientTypes.Public, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrEmpty(secret) && string.Equals(type, OpenIddictConstants.ClientTypes.Public,
+                StringComparison.OrdinalIgnoreCase))
         {
             throw new BusinessException(L["NoClientSecretCanBeSetForPublicApplications"]);
         }
 
-        if (string.IsNullOrEmpty(secret) && string.Equals(type, OpenIddictConstants.ClientTypes.Confidential, StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrEmpty(secret) && string.Equals(type, OpenIddictConstants.ClientTypes.Confidential,
+                StringComparison.OrdinalIgnoreCase))
         {
             throw new BusinessException(L["TheClientSecretIsRequiredForConfidentialApplications"]);
         }
@@ -238,13 +241,14 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 ClientSecret = secret,
                 ConsentType = consentType,
                 DisplayName = displayName,
-                ClientUri = clientUri,
+                ClientUri = clientUri
             };
 
             Check.NotNullOrEmpty(grantTypes, nameof(grantTypes));
             Check.NotNullOrEmpty(scopes, nameof(scopes));
 
-            if (new [] { OpenIddictConstants.GrantTypes.AuthorizationCode, OpenIddictConstants.GrantTypes.Implicit }.All(grantTypes.Contains))
+            if (new[] {OpenIddictConstants.GrantTypes.AuthorizationCode, OpenIddictConstants.GrantTypes.Implicit}.All(
+                    grantTypes.Contains))
             {
                 application.Permissions.Add(OpenIddictConstants.Permissions.ResponseTypes.CodeIdToken);
 
@@ -268,7 +272,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                     application.Permissions.Add(OpenIddictConstants.Permissions.ResponseTypes.Code);
                 }
 
-                if (grantType == OpenIddictConstants.GrantTypes.AuthorizationCode || grantType == OpenIddictConstants.GrantTypes.Implicit)
+                if (grantType == OpenIddictConstants.GrantTypes.AuthorizationCode ||
+                    grantType == OpenIddictConstants.GrantTypes.Implicit)
                 {
                     application.Permissions.Add(OpenIddictConstants.Permissions.Endpoints.Authorization);
                 }
@@ -321,7 +326,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 }
             }
 
-            var buildInScopes = new []
+            var buildInScopes = new[]
             {
                 OpenIddictConstants.Permissions.Scopes.Address,
                 OpenIddictConstants.Permissions.Scopes.Email,
@@ -362,7 +367,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             {
                 if (!postLogoutRedirectUri.IsNullOrEmpty())
                 {
-                    if (!Uri.TryCreate(postLogoutRedirectUri, UriKind.Absolute, out var uri) || !uri.IsWellFormedOriginalString())
+                    if (!Uri.TryCreate(postLogoutRedirectUri, UriKind.Absolute, out var uri) ||
+                        !uri.IsWellFormedOriginalString())
                     {
                         throw new BusinessException(L["InvalidPostLogoutRedirectUri", postLogoutRedirectUri]);
                     }
@@ -379,8 +385,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 await _permissionDataSeeder.SeedAsync(
                     ClientPermissionValueProvider.ProviderName,
                     name,
-                    permissions,
-                    null
+                    permissions
                 );
             }
 

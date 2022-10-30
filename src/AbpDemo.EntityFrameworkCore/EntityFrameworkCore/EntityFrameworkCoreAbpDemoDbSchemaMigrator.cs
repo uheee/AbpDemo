@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AbpDemo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using AbpDemo.Data;
 using Volo.Abp.DependencyInjection;
 
 namespace AbpDemo.EntityFrameworkCore;

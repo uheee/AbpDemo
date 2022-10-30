@@ -12,8 +12,8 @@ namespace AbpDemo.Samples;
  */
 public class SampleDomainTests : AbpDemoDomainTestBase
 {
-    private readonly IIdentityUserRepository _identityUserRepository;
     private readonly IdentityUserManager _identityUserManager;
+    private readonly IIdentityUserRepository _identityUserRepository;
 
     public SampleDomainTests()
     {
